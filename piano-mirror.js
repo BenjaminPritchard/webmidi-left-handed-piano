@@ -1,9 +1,9 @@
 //
 // This is the webMidi version of the Kundalini Piano Mirror
-//		https://www.kundalinisoftware.com/kundalini-piano-mirror/
+//		https://github.com/BenjaminPritchard/webmidi-left-handed-piano
 //
 // See the github page for this project for more information:
-//		https://github.com/BenjaminPritchard
+//		https://github.com/BenjaminPritchard/webmidi-left-handed-piano
 //
 // Benjamin Pritchard / Kundalini Software
 //
