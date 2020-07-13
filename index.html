@@ -3,7 +3,45 @@
 
 <script src="piano-mirror.js"></script>
 
-<body onload="InitSystem();">
+<script>
+	
+function showAbout() {
+	document.getElementById("about").style.display = 'block';
+	document.getElementById("instructions").style.display = 'none';
+	document.getElementById("Main").style.display = 'none';
+}
+
+
+function showInstructions() {
+	document.getElementById("about").style.display = 'none';
+	document.getElementById("instructions").style.display = 'block';
+	document.getElementById("Main").style.display = 'none';
+}
+
+
+function showMain() {
+	document.getElementById("about").style.display = 'none';
+	document.getElementById("instructions").style.display = 'none';
+	document.getElementById("Main").style.display = 'block';
+}
+
+function DoModeChange() {
+	CurrentTranpositionMode = mode.selectedIndex;
+}
+
+function Init() {
+
+	statusPrompt = document.getElementById("status");
+	midi_input_dropdown = document.getElementById("midi_inputs");
+	midi_output_dropdown = document.getElementById("midi_outputs");
+	
+	InitMidi();
+}
+
+
+</script>
+
+<body onload="Init();">
 
 <H1>Left Handed Piano</H1>
 <a href="javascript:showAbout();">About</a>

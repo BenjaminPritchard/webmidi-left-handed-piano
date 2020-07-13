@@ -5,8 +5,17 @@
 // See the github page for this project for more information:
 //		https://github.com/BenjaminPritchard/webmidi-left-handed-piano
 //
-// Benjamin Pritchard / Kundalini Software
+// Usage:
+//		statusPrompt = document.getElementById("xxx");
+//		midi_input_dropdown = document.getElementById("xxx");
+//		midi_output_dropdown = document.getElementById("xxx");
+//		InitMidi();
+// 
+// Update CurrentTranpositionMode whenever you want
 //
+// This code needs updated to work correctly if there is more than one MIDI input / output
+//
+// Benjamin Pritchard / Kundalini Software
 // 1.0	12-July-2020	initial release
 //
 
@@ -17,9 +26,15 @@ const LEFT_ASCENDING	= 1;
 const RIGHT_DESCENDING	= 2; 
 const MIRROR_IMAGE		= 3;
 
+var CurrentTranpositionMode = NO_TRANSPOSITION;
+
+var statusPrompt;
+var midi_input_dropdown;
+var midi_output_dropdown;
+
 function sendMidiMessage(status, data1, data2) {
    
-  const device = midiOut[midi_outputs.selectedIndex];
+  const device = midiOut[midi_output_dropdown.selectedIndex];
   const msgOn = [status, data1, data2];
   
   device.send(msgOn); 
@@ -32,7 +47,7 @@ function TransformNote(Note, transpositionMode) {
 	var retval = Note;
 	var offset;
 
-	switch (transpositionMode) {
+	switch (CurrentTranpositionMode) {
 
 		case NO_TRANSPOSITION:
 			// do nothing, just return original note!
@@ -85,7 +100,7 @@ function processMIDIMessage(message) {
 	if (status == 254) return;
 
 	var data1 = message.data[1];
-	data1 = TransformNote(data1, mode.selectedIndex);
+	data1 = TransformNote(data1);
     var data2 = (message.data.length > 2) ? message.data[2] : 0; 
 
 	sendMidiMessage(status, data1, data2)
@@ -94,12 +109,11 @@ function processMIDIMessage(message) {
 
 // called after we are granted access to webMIDI 
 function onMIDISuccess(midiAccess) {
-    console.log(midiAccess);
-
+   
     midiOut = [];
 
 	// just add all the midi input devices to our dropdown
-	midi_inputs = document.getElementById("midi_inputs");
+	midi_inputs = midi_input_dropdown;
 	for (var input of midiAccess.inputs.values()) {
 		var option = document.createElement("option");
   		option.text = input.name;
@@ -109,7 +123,7 @@ function onMIDISuccess(midiAccess) {
     }
 
 	// add all midi output devices to our dropdown
-	midi_outputs = document.getElementById("midi_outputs");
+	midi_outputs = midi_output_dropdown;
 	for (var output of midiAccess.outputs.values()) {
         
 		// add to dropdown
@@ -124,46 +138,21 @@ function onMIDISuccess(midiAccess) {
 
 }
 
-// probably should let the user know somehow??
+
 function onMIDIFailure() {
-	document.getElementById("status").innerText = 'Could not access your MIDI devices.';
+	statusPrompt.innerText = 'Could not access your MIDI devices.';
 }
 
-function InitSystem() 
+function InitMidi() 
 {
 	if (navigator.requestMIDIAccess) {
-		document.getElementById("status").innerText = 'This browser supports WebMIDI!';
+		statusPrompt.innerText = 'This browser supports WebMIDI!';
 	} else {
-		document.getElementById("status").innerText = 'WebMIDI is not supported in this browser.';
+		statusPrompt.innerText = 'WebMIDI is not supported in this browser.';
 	}
 
 	navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
 	
 }
 
-function showAbout() {
-	document.getElementById("about").style.display = 'block';
-	document.getElementById("instructions").style.display = 'none';
-	document.getElementById("Main").style.display = 'none';
-}
-
-
-function showInstructions() {
-	document.getElementById("about").style.display = 'none';
-	document.getElementById("instructions").style.display = 'block';
-	document.getElementById("Main").style.display = 'none';
-}
-
-
-function showMain() {
-	document.getElementById("about").style.display = 'none';
-	document.getElementById("instructions").style.display = 'none';
-	document.getElementById("Main").style.display = 'block';
-}
-
-
-function DoModeChange() {
-	// for now we don't do anything
-	// just the .selectedIndex of the dropdown will be used in 	
-}
 

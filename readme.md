@@ -1,6 +1,8 @@
 # About
 
-This is the webmidi version of The Kundalini Piano Mirror, which is a way to create a left-handed piano
+* This is the webmidi version of The Kundalini Piano Mirror, which is a way to create a left-handed piano.
+* For a live version of this code, please see: https://kundalinisoftware.com/left-handed-piano/
+
 
 # For more information
 
