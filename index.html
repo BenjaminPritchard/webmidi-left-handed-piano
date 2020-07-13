@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<script src="piano-mirror.js"></script>
+
+<body onload="InitSystem();">
+
+<H1>Left Handed Piano</H1>
+<a href="javascript:showAbout();">About</a>
+| 
+<a href="javascript:showInstructions();">Instructions </a>
+| 
+<a href="https://www.kundalinisoftware.com/" target="_blank">Kundalini Software</a>
+| 
+<a href="https://github.com/BenjaminPritchard/bach-in-the-mirror/" target="_blank">Github</a>
+
+<br>
+<br>
+
+<select id="midi_inputs" onchange="ChangeScore();"></select>
+<select id="midi_outputs" onchange="ChangeScore();"></select>
+
+<select id = "mode" onchange="DoModeChange();">
+	<option value="0">Normal</option>
+	<option value="1">Left Handed Ascending</option>
+	<option value="2">Right Handed Descending</option>
+	<option value="3">Mirror Image</option>
+  </select>
+
+<br>
+<hr>
+
+<div style="display:none" id="about">
+<p>This is the webMidi version of the Kundalini Piano Mirror. It creates a left-handed (mirror image piano).</p>
+<p>For more information, please see:</p>
+<a href="https://www.kundalinisoftware.com/kundalini-piano-mirror/" target="_blank">https://www.kundalinisoftware.com/kundalini-piano-mirror/</a>
+<br>
+<br>
+<button onclick="showMain();">OK</button>
+</div>
+
+<div style="display:none" id="instructions">
+<br>
+Make sure to turn off local echo on your digital piano. Then select your tranposition mode.
+<br>
+<br>
+<button onclick="showMain();">OK</button>
+</div>
+
+
+<div id="Main"> 
+<p id="status"></p>
+For some scores, checkout <a href="https://www.kundalinisoftware.com/bach-in-the-mirror/" target="_blank">Bach-In-The-Mirror</a>
+</div> 
+ 
+</body>
+</html>
